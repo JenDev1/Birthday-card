@@ -6,92 +6,108 @@
     <title>Digital Birthday Card</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
     
-    <style>
-        :root {
-            --pink-bg: #ffe4e9;
-            --card-white: rgba(255, 255, 255, 0.9);
-            --text-pink: #ff85a1;
-        }
+   <style>
+    :root {
+        --pink-bg: #ffe4e9;
+        /* Adjusted to match the soft pink in the Hello Kitty background */
+        --card-white: rgba(255, 230, 235, 0.6); 
+        --text-pink: #ff85a1;
+    }
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--pink-bg);
-            background-image: url('bg.jpg'); 
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--pink-bg);
+        background-image: url('bg.jpg'); 
+        background-size: cover;
+        background-position: center;
+        background-repeat: repeat; /* Changed to repeat to fill mobile screens better */
+        background-attachment: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Ensures it fills the whole mobile screen */
+        overflow: hidden;
+    }
 
-        .page {
-            display: none;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(8px);
-            padding: 30px;
-            border-radius: 25px;
-            border: 4px solid rgb(255, 182, 193);
-            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.5);
-            width: 85%;
-            max-width: 400px;
-            animation: fadeIn 0.8s ease-out;
-        }
+    .page {
+        display: none;
+        text-align: center;
+        /* Background is now more transparent and tinted pink to match the theme */
+        background: var(--card-white); 
+        backdrop-filter: blur(5px);
+        padding: 25px;
+        border-radius: 25px;
+        /* Border color matched to the darker pink ribbons in the background */
+        border: 4px solid rgba(255, 105, 180, 0.4); 
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        width: 85%;
+        max-width: 350px; /* Slightly narrower for a better mobile fit */
+        margin: auto; /* Centers the card horizontally and vertically */
+        animation: fadeIn 0.8s ease-out;
+        box-sizing: border-box; /* Prevents padding from breaking the width */
+    }
 
-        .active { display: block; }
+    .active { 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        justify-content: center; 
+    }
 
-        h2 { 
-            color: var(--text-pink); 
-            font-family: 'Brush Script MT', cursive; 
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
+    h2 { 
+        color: var(--text-pink); 
+        font-family: 'Brush Script MT', cursive; 
+        font-size: 2.2rem;
+        margin-bottom: 10px;
+    }
 
-        /* 2. Unique Cursive Style for the message */
-        .unique-message {
-            font-family: 'Dancing Script', cursive;
-            font-size: 19px;
-            line-height: 1.4;
-            color: rgb(201, 131, 142);
-            min-height: 150px; /* Prevents card jumping during typing */
-            text-shadow: 1px 1px 1px #ff85a133;
-        }
+    .unique-message {
+        font-family: 'Dancing Script', cursive;
+        font-size: 18px;
+        line-height: 1.4;
+        /* Darker pink-brown for high readability on the transparent background */
+        color: #5d3a3a; 
+        min-height: 150px;
+        font-weight: 600;
+        padding: 10px 0;
+    }
 
-        img, video {
-            max-width: 100%;
-            border-radius: 15px;
-            margin-bottom: 15px;
-        }
+    img, video {
+        max-width: 100%;
+        height: auto;
+        border-radius: 15px;
+        margin-bottom: 15px;
+    }
 
-        .btn {
-            background-color: var(--text-pink);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-        }
+    .btn {
+        background-color: var(--text-pink);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 0 4px 10px rgba(255, 133, 161, 0.4);
+    }
 
-        #timer {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--text-pink);
-            margin: 15px 0;
-        }
+    #timer {
+        font-size: 20px;
+        font-weight: bold;
+        color: var(--text-pink);
+        margin: 15px 0;
+        background: rgba(255, 255, 255, 0.4);
+        padding: 10px;
+        border-radius: 10px;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.9); }
+        to { opacity: 1; transform: scale(1); }
+    }
+</style>
 </head>
 <body>
 
