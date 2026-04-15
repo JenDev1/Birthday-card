@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Birthday Card</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --pink-bg: #ffe4e9;
+            --card-white: rgba(255, 255, 255, 0.9);
+            --text-pink: #ff85a1;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--pink-bg);
+            background-image: url('background.avif'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .page {
+            display: none;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 30px;
+            border-radius: 25px;
+            border: 4px solid #ffb6c1;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.5);
+            width: 85%;
+            max-width: 400px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .active { display: block; }
+
+        h2 { 
+            color: var(--text-pink); 
+            font-family: 'Brush Script MT', cursive; 
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* 2. Unique Cursive Style for the message */
+        .unique-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 19px;
+            line-height: 1.4;
+            color: #444;
+            min-height: 150px; /* Prevents card jumping during typing */
+            text-shadow: 1px 1px 1px rgba(255, 133, 161, 0.2);
+        }
+
+        img, video {
+            max-width: 100%;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            background-color: var(--text-pink);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        #timer {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--text-pink);
+            margin: 15px 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="Download.mp4" type="audio/mpeg">
+    </audio>
+
+    <div id="page1" class="page active">
+        <img src="envelope.jpg" alt="Envelope">
+        <p>You've got a message!</p>
+        <button class="btn" onclick="startCard()">click here</button>
+    </div>
+
+    <div id="page2" class="page">
+        <h2>Happy Birthday!</h2>
+        <video id="bdayVideo" loop playsinline style="width:80%;">
+            <source src="bdaybedyow.mp4" type="video/mp4">
+        </video>
+        <p>Thank you for your existence.</p>
+        <button class="btn" onclick="nextPage(3)">Click for more</button>
+    </div>
+
+    <div id="page3" class="page">
+        <p>You've been a blessing for this long:</p>
+        <div id="timer">Calculating...</div>
+        <button class="btn" onclick="nextPage(4)">Wait, there's more!</button>
+    </div>
+
+    <div id="page4" class="page">
+        <img src="hannah.jpg" alt="Birthday Girl">
+        <div id="typing-text" class="unique-message"></div>
+        <button class="btn" onclick="restartCard()">Restart</button>
+    </div>
+
+    <script>
+        const music = document.getElementById('bgMusic');
+        
+        // Your Heartfelt Message
+        const fullMessage = "Happy birthday to the special person in my life! Thank you for being part of my life, thank you for growing well, thank you for everything. I hope you are surrounded by happiness and blessed with love. You are amazing and worth so much! Stay healthy and happy, I love you more than yesterday and will love you forever... till I die.";
+
+        function startCard() {
+            music.play();
+            nextPage(2);
+        }
+
+        function nextPage(pageNum) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById('page' + pageNum).classList.add('active');
+
+            const video = document.getElementById('bdayVideo');
+            if(pageNum === 2) {
+                video.currentTime = 0;
+                video.play();
+                music.volume = 0.3;
+            } else if (pageNum === 4) {
+                // 4. Start typing effect when the last page opens
+                startTyping();
+                music.volume = 1.0;
+            } else {
+                video.pause();
+                music.volume = 1.0;
+            }
+        }
+
+        // Typing Effect Function
+        let charIndex = 0;
+        function startTyping() {
+            const container = document.getElementById("typing-text");
+            if (charIndex < fullMessage.length) {
+                container.innerHTML += fullMessage.charAt(charIndex);
+                charIndex++;
+                setTimeout(startTyping, 40); // Control typing speed here
+            }
+        }
+
+        function restartCard() {
+            charIndex = 0;
+            document.getElementById("typing-text").innerHTML = "";
+            music.currentTime = 0;
+            nextPage(1);
+        }
+
+        const birthDate = new Date("May 02, 2011 00:00:00").getTime();
+        setInterval(function() {
+            const now = new Date().getTime();
+            const duration = now - birthDate;
+            const days = Math.floor(duration / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((duration % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((duration % (1000 * 60)) / 1000);
+            document.getElementById("timer").innerHTML = days + "d " + hours + "h " + mins + "m " + secs + "s";
+        }, 1000);
+    </script>
+</body>
+</html>
